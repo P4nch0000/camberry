@@ -1,0 +1,46 @@
+version: "3.5"
+
+networks:
+  red-1:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/24
+services:
+  quick:
+    image: quick
+    deploy:
+      restart_policy:
+        condition: on-failure
+    container_name: "quick-start"
+    build: "./quick-start"
+    ports:
+      - 8000:5000
+    networks:
+      red-1:
+        ipv4_address: 172.21.0.3
+  permisos:
+    image: permisos
+    deploy:
+      restart_policy:
+        condition: on-failure
+    container_name: "permisos"
+    build: "./permisos"
+    ports:
+      - 8001:5000
+    networks:
+      red-1:
+        ipv4_address: 172.21.0.4
+  goodrive:
+    image: goodrive
+    deploy:
+      restart_policy:
+        condition: on-failure
+    container_name: "goodrive"
+    build: "./google-drive"
+    ports:
+      - 8002:5000
+    networks:
+      red-1:
+        ipv4_address: 172.21.0.5
+        
